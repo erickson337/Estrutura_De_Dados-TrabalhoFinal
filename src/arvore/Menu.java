@@ -119,7 +119,7 @@ public class Menu {
 
     public static void pesquisarTelefone(Arvore arvore) {
         String telefone = JOptionPane.showInputDialog(null, "Digite o Numero de telefone do usuario: ");
-        Item item = arvore.pesquisaTelefone(telefone);
+        Item item = arvore.CamCentralT(telefone);
         String info = "";
         if (arvore.eVazia()) {
             JOptionPane.showMessageDialog(null, "Erro ao realizar a consulta, insira algo na árvore!", "ÿrvore vazia", JOptionPane.ERROR_MESSAGE);
@@ -134,7 +134,7 @@ public class Menu {
 
     public static void pesquisarEndereco(Arvore arvore) {
         String endereco = JOptionPane.showInputDialog(null, "Digite o Numero de Endereco do usuario: ");
-        Item[] lista_arvore = arvore.pesquisaEndereco(endereco);
+        Item[] lista_arvore = arvore.CamCentralE(endereco);
         String info = "";
         if (arvore.eVazia()) {
             JOptionPane.showMessageDialog(null, "Erro ao realizar a consulta, insira algo na árvore!", "Árvore vazia", JOptionPane.ERROR_MESSAGE);
