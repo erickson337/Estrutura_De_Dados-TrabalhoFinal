@@ -75,37 +75,6 @@ public class Arvore {
         return no;
     }
 
-//    public boolean remover(int pedido_id) {
-//        if (pesquisar(pedido_id, this.raiz) != null) {
-//            this.raiz = remover(pedido_id, this.raiz);
-//            this.quantNos--;
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
-//    public NoArv remover(int pedido_id, NoArv arv) {
-//        if (pedido_id < arv.getInfo().getPedido_id()) {
-//            arv.setEsq(remover(pedido_id, arv.getEsq()));
-//        } else {
-//            if (pedido_id > arv.getInfo().getPedido_id()) {
-//                arv.setDir(remover(pedido_id, arv.getDir()));
-//            } else {
-//                if (arv.getDir() == null) {
-//                    return arv.getEsq();
-//                } else {
-//                    if (arv.getEsq() == null) {
-//                        return arv.getDir();
-//                    } else {
-//                        arv.setEsq(Arrumar(arv, arv.getEsq()));
-//                    }
-//                }
-//            }
-//        }
-//        return arv;
-//    }
-
     private NoArv Arrumar(NoArv arv, NoArv maior) {
         if (maior.getDir() != null) {
             maior.setDir(Arrumar(arv, maior.getDir()));
@@ -134,41 +103,39 @@ public class Arvore {
         return vet;
     }
 
-    public Item CamCentralT(String telefone) {
+    public Item pesquisarTelefone(String telefone) {
         int[] n = new int[1];
         // n[0] = 0;
         Item item = null;
-        return (FazCamCentralT(this.raiz, item, telefone));
+        return (pesquisarTelefone(this.raiz, item, telefone));
     }
 
-    private Item FazCamCentralT(NoArv arv, Item item, String telefone) {
+    private Item pesquisarTelefone(NoArv arv, Item item, String telefone) {
         if (arv != null) {
-            item = FazCamCentralT(arv.getEsq(), item, telefone);
+            item = pesquisarTelefone(arv.getEsq(), item, telefone);
             if (arv.getInfo().getTelefone().equals(telefone)) {
                 item = arv.getInfo();
             }
-            item = FazCamCentralT(arv.getDir(), item, telefone);
+            item = pesquisarTelefone(arv.getDir(), item, telefone);
         }
         return item;
     }
 
-    public Item[] CamCentralE(String endereco) {
+    public Item[] pesquisarEndereco(String endereco) {
         int[] n = new int[1];
         n[0] = 0;
         Item[] vet = new Item[this.quantNos];
-        return (FazCamCentralE(this.raiz, vet, n, endereco));
+        return (pesquisarEndereco(this.raiz, vet, n, endereco));
     }
 
-    private Item[] FazCamCentralE(NoArv arv, Item[] vet, int[] n, String endereco) {
+    private Item[] pesquisarEndereco(NoArv arv, Item[] vet, int[] n, String endereco) {
         if (arv != null) {
-            vet = FazCamCentralE(arv.getEsq(), vet, n, endereco);
+            vet = pesquisarEndereco(arv.getEsq(), vet, n, endereco);
             if (arv.getInfo().getEndereco().equals(endereco)) {
                 vet[n[0]] = arv.getInfo();
                 n[0]++;
             }
-
-            vet = FazCamCentralE(arv.getDir(), vet, n, endereco);
-
+            vet = pesquisarEndereco(arv.getDir(), vet, n, endereco);
         }
         return vet;
     }
@@ -192,17 +159,17 @@ public class Arvore {
     }
 
     //caminhamento pós-fixado
-    public Item[] CamPosFixado() {
+    public Item[] camPosFixado() {
         int[] n = new int[1];
         n[0] = 0;
         Item[] vet = new Item[this.quantNos];
-        return (FazCamPosFixado(this.raiz, vet, n));
+        return (fazCamPosFixado(this.raiz, vet, n));
     }
 
-    private Item[] FazCamPosFixado(NoArv arv, Item[] vet, int[] n) {
+    private Item[] fazCamPosFixado(NoArv arv, Item[] vet, int[] n) {
         if (arv != null) {
-            vet = FazCamPosFixado(arv.getEsq(), vet, n);
-            vet = FazCamPosFixado(arv.getDir(), vet, n);
+            vet = fazCamPosFixado(arv.getEsq(), vet, n);
+            vet = fazCamPosFixado(arv.getDir(), vet, n);
             vet[n[0]] = arv.getInfo();
             n[0]++;
         }
