@@ -146,7 +146,6 @@ public class Arvore {
             item = FazCamCentralT(arv.getEsq(), item, telefone);
             if (arv.getInfo().getTelefone().equals(telefone)) {
                 item = arv.getInfo();
-                // n[0]++;
             }
             item = FazCamCentralT(arv.getDir(), item, telefone);
         }
