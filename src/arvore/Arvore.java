@@ -104,8 +104,6 @@ public class Arvore {
     }
 
     public Item pesquisarTelefone(String telefone) {
-        int[] n = new int[1];
-        // n[0] = 0;
         Item item = null;
         return (pesquisarTelefone(this.raiz, item, telefone));
     }
@@ -176,26 +174,10 @@ public class Arvore {
         return vet;
     }
 
-    private NoArv pesquisarRemover(int chave, NoArv no, String telefone) {
-        if (no != null) {
-            if (chave < no.getInfo().getPedido_id()) {
-                if (no.getInfo().getTelefone().equals(telefone)) {
-                    return no;
-                }
-                no = pesquisar(chave, no.getEsq());
-            } else {
-                if (chave > no.getInfo().getPedido_id()) {
-                    no = pesquisar(chave, no.getDir());
-                }
-            }
-        }
-        return no;
-    }
-
-    public boolean remover(String telefone) {
-        int pedido_id = this.raiz.getInfo().getPedido_id();
-        if (pesquisarRemover(pedido_id, this.raiz, telefone) != null) {
-            this.raiz = remover(pedido_id, this.raiz);
+    public boolean removerClienteTelefone(String telefone) {
+        Item item = pesquisarTelefone(telefone);
+        if (item != null) {
+            this.raiz = removerCliente(item.getPedido_id(), this.raiz);
             this.quantNos--;
             return true;
         } else {
@@ -203,31 +185,35 @@ public class Arvore {
         }
     }
 
-    private NoArv remover(int pedido_id, NoArv arv) {
-        if (pedido_id < arv.getInfo().getPedido_id()) {
-            arv.setEsq(remover(pedido_id, arv.getEsq()));
+    public NoArv removerCliente(int chave, NoArv arv) {
+        if (chave < arv.getInfo().getPedido_id()) {
+            arv.setEsq(removerCliente(chave, arv.getEsq()));
         } else {
-            if (arv.getDir() == null) {
-                return arv.getEsq();
+            if (chave > arv.getInfo().getPedido_id()) {
+                arv.setDir(removerCliente(chave, arv.getDir()));
             } else {
-                if (arv.getEsq() == null) {
-                    return arv.getDir();
+                if (arv.getDir() == null) {
+                    return arv.getEsq();
                 } else {
-                    arv.setEsq(Arrumar(arv, arv.getEsq()));
+                    if (arv.getEsq() == null) {
+                        return arv.getDir();
+                    } else {
+                        arv.setEsq(Arrumar(arv, arv.getEsq()));
+                    }
                 }
             }
         }
         return arv;
     }
-    
-    public boolean alterarDadosCliente(String telefone, String [] dados) {
+
+    public boolean alterarDadosCliente(String telefone, String[] dados) {
         int[] n = new int[1];
         n[0] = 0;
         Item[] vet = new Item[this.quantNos];
         return alterarDadosCliente(this.raiz, vet, n, telefone, dados);
     }
-    
-    private boolean alterarDadosCliente(NoArv arv, Item[] vet, int[] n, String telefone, String [] dados) {
+
+    private boolean alterarDadosCliente(NoArv arv, Item[] vet, int[] n, String telefone, String[] dados) {
         if (arv != null) {
             alterarDadosCliente(arv.getEsq(), vet, n, telefone, dados);
             if (arv.getInfo().getTelefone().equals(telefone)) {
@@ -239,7 +225,7 @@ public class Arvore {
             }
             alterarDadosCliente(arv.getDir(), vet, n, telefone, dados);
         }
-       return false;
+        return false;
     }
 
 }

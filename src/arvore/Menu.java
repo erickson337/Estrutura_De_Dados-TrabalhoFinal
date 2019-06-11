@@ -44,7 +44,7 @@ public class Menu {
                         JOptionPane.showMessageDialog(null, "Erro ao realizar a consulta, insira algo na Árvore!", "Árvore vazia", JOptionPane.ERROR_MESSAGE);
                     } else {
                         telefone = JOptionPane.showInputDialog(null, "Digite o telefone para remover o cliente");
-                        if (arvore.remover(telefone)) {
+                        if (arvore.removerClienteTelefone(telefone)) {
                             JOptionPane.showMessageDialog(null, "Cliente excluído sucesso!");
                         } else {
                             JOptionPane.showMessageDialog(null, "Remoção não efetuada, cliente não encontrado", "Não encontrado", JOptionPane.ERROR_MESSAGE);
