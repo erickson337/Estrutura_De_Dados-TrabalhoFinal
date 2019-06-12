@@ -28,13 +28,11 @@ public class Menu {
                     break;
                 case 2:
                     String telefone = JOptionPane.showInputDialog(null, "Digite o numero do telefone: ");
-                    String nome = JOptionPane.showInputDialog(null, "Digite um novo nome: ");
-                    String endereco = JOptionPane.showInputDialog(null, "Digite um novo endereco: ");
-                    String novoTelefone = JOptionPane.showInputDialog(null, "Digite um novo número de telefone: ");
-                    String pedido = JOptionPane.showInputDialog(null, "Digite um novo pedido: ");
-                    String dados[] = { nome, novoTelefone, endereco, pedido };
-                    if (arvore.alterarDadosCliente(telefone, dados)) {
-                        JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
+                    if (arvore.alterarDadosCliente(telefone, null) != null) {
+                        String dados_alterados[] = cadastro ();
+                        String dados[] = { dados_alterados[0], dados_alterados[1], dados_alterados[2], dados_alterados[3] };
+                        arvore.alterarDadosCliente(telefone, dados);
+                        JOptionPane.showMessageDialog(null, "Pedido alterado com sucesso!");
                     } else {
                         JOptionPane.showMessageDialog(null, "Alteração não efetuada, cliente não encontrado", "Não encontrado", JOptionPane.ERROR_MESSAGE );
                     }
@@ -91,7 +89,7 @@ public class Menu {
         } while (opcao != 6);
     }
 
-    public static Item inserir(int pedido_id) {
+    public static String[] cadastro () {
         String nome = "", endereco = "", pedido = "", telefone = "";
         int pedido_escolha = 0;
         String acais[] = {"Açai com complementos", "Açai sem complementos"};
@@ -111,7 +109,15 @@ public class Menu {
         }
 
         telefone = JOptionPane.showInputDialog(null, "Informe seu telefone de contato: ");
-        Item item = new Item(nome, endereco, pedido, telefone, pedido_id);
+        
+        String dados [] = { nome, endereco, pedido, telefone };
+        return dados;
+    }
+    
+    
+    public static Item inserir(int pedido_id) {
+        String dados_cadastrados[] = cadastro();
+        Item item = new Item(dados_cadastrados[0], dados_cadastrados[1], dados_cadastrados[2], dados_cadastrados[3], pedido_id);
         JOptionPane.showMessageDialog(null, "Pedido efetuado com sucesso!", "Pedido cadastrado", JOptionPane.INFORMATION_MESSAGE);
 
         return item;

@@ -206,26 +206,31 @@ public class Arvore {
         return arv;
     }
 
-    public boolean alterarDadosCliente(String telefone, String[] dados) {
-        int[] n = new int[1];
-        n[0] = 0;
-        Item[] vet = new Item[this.quantNos];
-        return alterarDadosCliente(this.raiz, vet, n, telefone, dados);
+    public Item alterarDadosCliente(String telefone, String[] dados) {
+        Item item = null;
+        Item pesquisaTelefone = alterarDadosCliente(this.raiz, item, telefone);
+        
+        if (pesquisaTelefone != null) {
+            if (dados != null) {
+                pesquisaTelefone.setNome(dados[0]);
+                pesquisaTelefone.setEndereco(dados[1]);
+                pesquisaTelefone.setPedido(dados[2]);
+                pesquisaTelefone.setTelefone(dados[3]);
+            }
+            return pesquisaTelefone;
+        }
+        return null;
     }
 
-    private boolean alterarDadosCliente(NoArv arv, Item[] vet, int[] n, String telefone, String[] dados) {
+    private Item alterarDadosCliente(NoArv arv, Item item, String telefone) {
         if (arv != null) {
-            alterarDadosCliente(arv.getEsq(), vet, n, telefone, dados);
+            item = pesquisarTelefone(arv.getEsq(), item, telefone);
             if (arv.getInfo().getTelefone().equals(telefone)) {
-                arv.getInfo().setNome(dados[0]);
-                arv.getInfo().setTelefone(dados[1]);
-                arv.getInfo().setEndereco(dados[2]);
-                arv.getInfo().setPedido(dados[3]);
-                return true;
+                item = arv.getInfo();
             }
-            alterarDadosCliente(arv.getDir(), vet, n, telefone, dados);
+            item = pesquisarTelefone(arv.getDir(), item, telefone);
         }
-        return false;
+        return item;
     }
 
 }
